@@ -1,21 +1,19 @@
-import "./label.css"
-import { nanoid } from "nanoid";
-import PropTypes from "prop-types";
+import React from "react"
 import { FilterPart, FilterField } from "styled/styled-filter";
+import { useDispatch, useSelector } from "react-redux";
+import { filterContact } from "../redux/contactsSlice";
 
-export const Filter = ({ name, value, onChange, type, label }) => {
-    const uniqueID = nanoid();
+export const Filter = () => {
+
+    const dispatch = useDispatch();
+    const filter = useSelector((state) => state.contacts.filter);
+
+    const handleChange = (e) => {
+        dispatch(filterContact(e.target.value));
+      };
 
     return <FilterPart>
-    <label className="label" htmlFor={uniqueID}>{label}</label>
-    <FilterField id={uniqueID} name={name} value={value} onChange={onChange} type={type}/>
+    <label className="label" htmlFor="filter">Find contacts by name</label>
+    <FilterField id="filter" value={filter} onChange={handleChange} type="text"/>
     </FilterPart>
 }
-
-Filter.propTypes = {
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    type: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-  }

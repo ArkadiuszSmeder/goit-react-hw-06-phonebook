@@ -1,1 +1,1 @@
-export const INITIAL_STATE = { contacts: [], name: '', number: '', filter: '' }
+export const INITIAL_STATE = { contacts: [], filter: '' }
