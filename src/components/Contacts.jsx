@@ -25,6 +25,6 @@ export const Contacts = () => {
   );
 };
 
-Contacts.propTypesropTypes = {
+Contacts.propTypes = {
   contact: PropTypes.array,
   }

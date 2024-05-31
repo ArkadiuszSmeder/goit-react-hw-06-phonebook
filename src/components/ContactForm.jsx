@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { ContactData, ContactInput, ContactSubmit, ContactLabel } from "../styled/styled-contactForm"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../redux/contactsSlice";
 
 export const ContactForm = () => {
   const [formData, setFormData] = useState({ name: "", number: "" });
   const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contacts.contacts);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -17,6 +18,13 @@ export const ContactForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    const duplicate = contacts.find(contact => 
+      contact.name === formData.name || contact.number === formData.number
+    );
+    if (duplicate) {
+      alert('Contact already exists');
+      return;
+    }
     dispatch(addContact(formData.name, formData.number));
     setFormData({ name: "", number: "" });
   }
